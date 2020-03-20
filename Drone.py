@@ -149,9 +149,9 @@ class Drone(object):
         time.sleep(wait)
 
     # Set Speed
-    def speed(self, wait):
+    def speed(self, x, wait):
         print("speed")
-        result = self.sendMessage("speed " x)
+        result = self.sendMessage("speed " + x)
 
     # Fly at a curve (drifting)
     def curve(self, x1, y1, z1, x2, y2, z2, speed, wait):
