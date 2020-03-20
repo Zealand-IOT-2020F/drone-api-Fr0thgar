@@ -11,7 +11,7 @@ class Drone(object):
         The mission pad includes the commands for the mission pad.
         The information messages includes the messages about battery, flytime, serial number and SDK informations."""
 
-# region Startup/Setup
+#region Startup/Setup
 
     # Constructor
     def __init__(self, ip, port):
@@ -67,8 +67,8 @@ class Drone(object):
         )
         time.sleep(wait)
 
-# endregion
-# region Commands
+#endregion
+#region Commands
 
     # TakeOff the ground
     def takeOff(self, wait):
@@ -157,25 +157,23 @@ class Drone(object):
     def curve(self, x1, y1, z1, x2, y2, z2, speed, wait):
         print("curve")
         result = self.sendMessage(
-        "curve " + x1 + " " + y1 + " " + z1 + " " + x2 +
+            "curve " + x1 + " " + y1 + " " + z1 + " " + x2 +
             " " + y2 + " " + z2 + " " + speed
         )
         time.sleep(wait)
 
 
-# endregion
-# region Missionpad
-""" A Mission pad is used together with a Tello Drone.
+#endregion
+
+#region Missionpad
+    """ A Mission pad is used together with a Tello Drone.
     The Tello Drone uses its camera to detect the Mission Pads ID and
     executes this Mission pads programmed commands. """
 
-   # Fly at a curve, with mission pad (drifting)
-   def curve_pad(self, x1, y1, z1, x2, y2, z2, speed, mid, wait):
+    # Fly at a curve, with mission pad (drifting)
+    def curve_pad(self, x1, y1, z1, x2, y2, z2, speed, mid, wait):
         print("curve")
-        result = self.sendMessage(
-        "curve " + x1 + " " + y1 + " " + z1 + " " + x2 +
-            " " + y2 + " " + z2 + " " + speed + " " + mid
-        )
+        result = self.sendMessage("curve " + x1 + " ", + y1 + " " + z1 + " " + x2 + " " + y2 + " " +z2 + " " + speed + " " + mid)
         time.sleep(wait)
 
     # Fly to the XYZ coordinates of the mission pad
@@ -206,8 +204,8 @@ class Drone(object):
             + speed + " " + yaw + " " + mid1 + " " + mid2
         )
 
-# endregion
-# region informations messages
+#endregion
+#region informations messages
 
     # Give a battery message
     def battery(self, wait):
@@ -233,4 +231,4 @@ class Drone(object):
         time.sleep(wait)
         return result
 
-# endregion
+#endregion
