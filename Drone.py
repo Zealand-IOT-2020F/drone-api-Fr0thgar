@@ -2,17 +2,15 @@ import socket
 import sys
 import time
 
-#region Commands
-#endregion
-
 class Drone(object):
     """ In this class der wil be 3 regions with commands and information that the drone will have. 
-        The 3 regions are StartUp, Commands and information messages. 
+        The 4 regions are StartUp, Commands, Mission Pad and Information Messages. 
         The start region includes det connection to the wifi and drone and the functions: sendMessage and printInfo.
         The commands includes the commands that the drone can perform.
+        The mission pad includes the commands for the mission pad.
         The information messages includes the messages about battery, flytime, serial number and SDK informations."""
     
-#region Startup
+#region Startup/Setup
 
     #Constructor 
     def __init__(self, ip, port):
@@ -48,9 +46,21 @@ class Drone(object):
         print("Hello Drone at : " + self.TelloIp)
         time.sleep(wait)    
     
+    #set wifi password for Tello drone
+    def wifi_ssid_pass(self, ssid, password, wait):
+        print("wifi_ssid_pass")
+        result = self.sendMessage("wifi " + "ssid" + " " + "password")
+        time.sleep(wait)
+    
+    #update Wifi password for the Tello drone
+    def ap_ssid_pass(self, ssid, password, wait):
+        print("ap_ssid_pass")
+        result = self.sendMessage("ap " + "ssid" + " " + "password")
+        time.sleep(wait)
+
 #endregion
 #region Commands
-
+            
     #TakeOff the ground
     def takeOff(self,wait):
         print("takeOff")
@@ -128,19 +138,74 @@ class Drone(object):
         print("stop")
         result = self.sendMessage("stop")
         time.sleep(wait)
-
-
-    #GoXYZSpeed
+    
+    #Set Speed
+    def speed(self, wait):
+        print("speed")
+        result = self.sendMessage("speed " x)
+        
+    #Fly at a curve (drifting)
+    def curve(self, x1, y1, z1, x2, y2, z2, speed, wait):
+        print("curve")
+        result = self.sendMessage(
+        "curve " + x1 + " " + y1 + " " + z1 + " " + x2 + 
+        " " + y2 + " " + z2 + " " + speed
+        )
+        time.sleep(wait) 
+    
+    #Remote controller settings    
+    def rcabcd(self, a, b ,c , d, wait):
+        print("rcabcd")
+        result = self.sendMessage(
+            "rc " + " " + a + " " + b + " " + c  + " " + d 
+        )
+        time.sleep(wait)
+        
+    
+#endregion       
+#region Missionpad     
+""" A Mission pad is used together witd a Tello Drone. 
+    The Tello Drone uses its camara to detect the Mission Pads ID and 
+    executes this Mission pads programmed commands. """
+    
+    #Fly at a curve, with mission pad (drifting)
+    def curve_pad(self, x1, y1, z1, x2, y2, z2, speed, mid, wait):
+        print("curve")
+        result = self.sendMessage(
+        "curve " + x1 + " " + y1 + " " + z1 + " " + x2 + 
+        " " + y2 + " " + z2 + " " + speed + " " + mid
+        )
+        time.sleep(wait)
+    
+    #Fly to the XYZ coordinates of the mission pad 
     def goXYZSpeed(self, x, y, z, speed, wait):
         print("goXYZSpeed")
         result = self.sendMessage("go " + x + " " + y + " " + z + " " + speed)
         time.sleep(wait)
-
     
+    #Mission pad detection
+    def mdirection(self, x, wait):
+        print("mdirection")
+        result = self.sendMessage("mdirection" + x)
+        time.sleep(wait)
+        return result    
     
+    #Turn off mission pad detection    
+    def moff(self, wait):
+        print("moff")
+        result = self.sendMessage("moff")
+        time.sleep(wait)
+        return result
 
+    #Fly from mission pad 1 to mission pad 2
+    def jump(self, x, y, z, speed, yaw, mid1, mid2, wait):
+        print("jump")
+        result = self.sendMessage(
+            "jump" + " " + x + " " + y + " " + z + " "
+             + speed + " " + yaw + " " + mid1 + " " + mid2
+        )
+    
 #endregion
-
 #region informations messages
 
     #Give a battery message
