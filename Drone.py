@@ -57,6 +57,14 @@ class Drone(object):
         print("ap_ssid_pass")
         result = self.sendMessage("ap " + "ssid" + " " + "password")
         time.sleep(wait)
+    
+    #Remote controller settings    
+    def rcabcd(self, a, b ,c , d, wait):
+        print("rcabcd")
+        result = self.sendMessage(
+            "rc " + " " + a + " " + b + " " + c  + " " + d 
+        )
+        time.sleep(wait)
 
 #endregion
 #region Commands
@@ -153,19 +161,12 @@ class Drone(object):
         )
         time.sleep(wait) 
     
-    #Remote controller settings    
-    def rcabcd(self, a, b ,c , d, wait):
-        print("rcabcd")
-        result = self.sendMessage(
-            "rc " + " " + a + " " + b + " " + c  + " " + d 
-        )
-        time.sleep(wait)
-        
     
+         
 #endregion       
 #region Missionpad     
-""" A Mission pad is used together witd a Tello Drone. 
-    The Tello Drone uses its camara to detect the Mission Pads ID and 
+""" A Mission pad is used together with a Tello Drone. 
+    The Tello Drone uses its camera to detect the Mission Pads ID and 
     executes this Mission pads programmed commands. """
     
     #Fly at a curve, with mission pad (drifting)
