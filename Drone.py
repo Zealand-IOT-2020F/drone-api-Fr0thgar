@@ -73,7 +73,7 @@ class Drone(object):
     # TakeOff the ground
     def takeOff(self, wait):
         print("takeOff")
-        result = self.sendMessage("TakeOff")
+        result = self.sendMessage("takeoff")
         time.sleep(wait)
 
     # Landing the drone
